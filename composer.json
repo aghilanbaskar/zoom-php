@@ -1,0 +1,22 @@
+{
+    "name": "aghilanbaskar/zoom-library",
+    "description": "A Zoom library client",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Aghilan Baskar",
+            "email": "aghilanbaskar@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "ZoomLibrary": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.3.0",
+        "guzzlehttp/guzzle": "7.2.*"
+    }
+}
