@@ -91,7 +91,7 @@ Pass required parameter as it is in Documentation
 ## output format
 All response body is JSON decode to output as an array
 
-All the method call will return an associative array with *status*, **data**, **message**
+All the method call will return an associative array with **status**, **data**, **message**
 ### status - true
 The API call is a success and its response body will be available in **data**
 ### status - false
