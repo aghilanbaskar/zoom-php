@@ -1,6 +1,8 @@
 {
     "name": "aghilanbaskar/zoom-library",
-    "description": "A Zoom library client",
+    "description": "zoom-php is a simple Zoom API library for using oAuth Zoom API. Which handles refresh token logic in itself.",
+    "keywords": ["zoom", "api", "php", "library"],
+    "homepage": "https://github.com/aghilanbaskar/zoom-php",
     "type": "library",
     "license": "MIT",
     "authors": [
