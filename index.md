@@ -1,37 +1,106 @@
-## Welcome to GitHub Pages
+# ZOOM-PHP
 
-You can use the [editor on GitHub](https://github.com/aghilanbaskar/zoom-php/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+ZOOM-PHP is a simple Zoom API library for using oAuth Zoom API. Which handles refresh token logic in itself.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Installation
 
-### Markdown
+Install easily via composer package
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```bash
+composer require aghilanbaskar/zoom-library
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+## Usage
+initialize the library with the required credentials
 
-### Jekyll Themes
+```php
+<?php
+require_once __DIR__ . '/../vendor/autoload.php';
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/aghilanbaskar/zoom-php/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+$zoom = new ZoomLibrary\Zoom([
+  'client_id' => 'your-client-id',
+  'client_secret' => 'your-client-secret',
+  'redirect_uri' => 'your-redirect-uri',
+  'credential_path' => 'zoom-oauth-credentials.json'
+]);
+```
 
-### Support or Contact
+OAuth URL
+```php
+$oAuthURL = $zoom->oAuthUrl();
+echo "<a href='{$oAuthURL}'>{$oAuthURL}</a><br>";
+```
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Once verification is successfull. It will redirect you to the specified callback URL with **CODE** in GET parameter.
+Pass the code to the Library
+```php
+$zoom->token($_GET['code']);
+```
+
+## Available methods
+**List Meetings:**
+
+```php
+$meetings = $zoom->listMeeting();
+or
+$meetings = $zoom->listMeeting($user_id, $query);
+
+if($meetings['status'] === false){
+ echo 'Request failed - Reason: '.$meetings['message'];
+ return;
+}
+$meetingsData = $meetings['data'];
+```
+**Create Meetings:**
+
+```php
+$meeting = $zoom->createMeeting($user_id, $json);
+
+if($meeting['status'] === false){
+ echo 'Request failed - Reason: '.$meeting['message'];
+ return;
+}
+$meetingData = $meeting['data'];
+```
+**Delete Meetings:**
+
+```php
+$meetings = $zoom->createMeeting($meeting_id, $query);
+
+if($meetings['status'] === false){
+ echo 'Request failed - Reason: '.$meetings['message'];
+ return;
+}
+echo $meetings['message'];
+```
+**Add Meeting Registrant:**
+
+```php
+$meetings = $zoom->addMeetingRegistrant($meeting_id, $json);
+
+if($meetings['status'] === false){
+ echo 'Request failed - Reason: '.$meetings['message'];
+ return;
+}
+$registrationData = $meetings['data'];
+```
+## Zoom Documentation:
+[Zoom Documentation](https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings)
+Pass required parameter as it is in Documentation
+
+## output format
+All response body is JSON decode to output as an array
+
+All the method call will return an associative array with **status**, **data**, **message**
+### status - true
+The API call is a success and its response body will be available in **data**
+### status - false
+The API call is failed and its reason for failure will be available in **message**
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
