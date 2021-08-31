@@ -65,7 +65,7 @@ $meetingData = $meeting['data'];
 **Delete Meetings:**
 
 ```php
-$meetings = $zoom->createMeeting($meeting_id, $query);
+$meetings = $zoom->deleteMeeting($meeting_id, $query);
 
 if($meetings['status'] === false){
  echo 'Request failed - Reason: '.$meetings['message'];
